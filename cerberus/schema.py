@@ -11,13 +11,15 @@ from cerberus.base import (
     UnconcernedValidator,
     normalize_rulesset,
 )
-from cerberus.platform import _GenericAlias
+from cerberus.platform import GenericAlias
 from cerberus.utils import schema_hash
 
 
 class SchemaValidator(UnconcernedValidator):
-    """ This validator provides mechanics to validate schemas passed to a Cerberus
-        validator. """
+    """
+    This validator provides mechanics to validate schemas passed to a Cerberus
+    validator.
+    """
 
     types_mapping = UnconcernedValidator.types_mapping.copy()
     types_mapping.update(
@@ -26,7 +28,7 @@ class SchemaValidator(UnconcernedValidator):
                 "container_but_not_string", (abc.Container,), (str,)
             ),
             "generic_type_alias": TypeDefinition(
-                "generic_type_alias", (_GenericAlias,), ()
+                "generic_type_alias", (GenericAlias,), ()
             ),
         }
     )
@@ -38,17 +40,17 @@ class SchemaValidator(UnconcernedValidator):
 
     @property
     def known_rules_set_refs(self):
-        """ The encountered references to rules set registry items. """
+        """The encountered references to rules set registry items."""
         return self._config["known_rules_set_refs"]
 
     @property
     def known_schema_refs(self):
-        """ The encountered references to schema registry items. """
+        """The encountered references to schema registry items."""
         return self._config["known_schema_refs"]
 
     @property
     def target_validator(self):
-        """ The validator whose schema is being validated. """
+        """The validator whose schema is being validated."""
         return self._config['target_validator']
 
     def _check_with_dependencies(self, field, value):
@@ -147,7 +149,7 @@ class SchemaValidator(UnconcernedValidator):
         return result
 
     def _validate_logical(self, rule, field, value):
-        """ {'allowed': ('allof', 'anyof', 'noneof', 'oneof')} """
+        """{'allowed': ('allof', 'anyof', 'noneof', 'oneof')}"""
         if not isinstance(value, Sequence):
             self._error(field, errors.TYPE)
             return
@@ -179,7 +181,7 @@ class SchemaValidator(UnconcernedValidator):
 
 
 class ValidatedSchema(MutableMapping):
-    """ A dict-subclass for caching of validated schemas. """
+    """A dict-subclass for caching of validated schemas."""
 
     def __init__(self, validator, schema=None):
         """
@@ -262,16 +264,14 @@ class ValidatedSchema(MutableMapping):
             self.validator._valid_schemas.add(_hash)
 
     def _validate(self, schema):
-        """ Validates a schema that defines rules against supported rules.
+        """
+        Validates a schema that defines rules against supported rules.
 
         :param schema: The schema to be validated as a legal cerberus schema
                        according to the rules of the related Validator object.
         """
         if isinstance(schema, str):
             schema = self.validator.schema_registry.get(schema, schema)
-
-        if schema is None:
-            raise SchemaError(errors.SCHEMA_MISSING)
 
         resolved = {
             k: self.validator.rules_set_registry.get(v, v)

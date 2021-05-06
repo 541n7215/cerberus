@@ -15,6 +15,7 @@ New
 - Generic type aliases from the :mod:`typing` module can be used as constraints
   for the ``type`` rule, including parametrized ones a.k.a. compound types
   (`#374`_)
+- Support for Python 3.5 is removed.
 
 Changed
 ~~~~~~~
@@ -31,6 +32,51 @@ Fixed
 
 .. _`#494`: https://github.com/pyeve/cerberus/issues/494
 .. _`#374`: https://github.com/pyeve/cerberus/issues/374
+
+Version 1.3.4
+-------------
+
+Released on May 5, 2021.
+
+Fixed
+~~~~~
+
+- Reverts the unsatisfying fix for `#557`_,
+- instead a ``RuntimeError`` is thrown when Python is running with optimization
+  level 2 (`#567`_)
+
+.. _`#567`: https://github.com/pyeve/cerberus/issues/567
+
+Version 1.3.3
+-------------
+
+Released on April 11, 2021.
+
+New
+~~~
+
+- Adds a benchmark to observe overall performance between code changes (`#531`_)
+- Adds support for Python 3.9
+- The Continuous Integration now runs on GitHub Actions
+
+Fixed
+~~~~~
+
+- Fixed unresolved registry references when getting a constraint for an error
+  (`#562`_)
+- Fixed crash when submitting non-hashable values to ``allowed`` (`#524`_)
+- Fixed schema validation for rules specifications with space (`#527`_)
+- Replaced deprecated rule name ``validator`` with ``check_with`` in the docs
+  (`#527`_)
+- Use the UnconcernedValidator when the Python interpreter is executed with
+  an optimization flag (`#557`_)
+- Several fixes and refinements of the docs
+
+.. _`#524`: https://github.com/pyeve/cerberus/issues/524
+.. _`#527`: https://github.com/pyeve/cerberus/issues/527
+.. _`#531`: https://github.com/pyeve/cerberus/issues/531
+.. _`#557`: https://github.com/pyeve/cerberus/issues/557
+.. _`#562`: https://github.com/pyeve/cerberus/issues/562
 
 Version 1.3.2
 -------------
@@ -156,7 +202,7 @@ Docs
 - Update README link; make it point to the new PyPI website
 
 .. _`#472`: https://github.com/pyeve/cerberus/pull/472
-.. _`#454`: https://github.com/pyeve/cerberus/pull/454
+.. _`#454`: https://github.com/pyeve/cerberus/issues/454
 .. _`#451`: https://github.com/pyeve/cerberus/pull/451
 .. _`#449`: https://github.com/pyeve/cerberus/pull/449
 .. _`#435`: https://github.com/pyeve/cerberus/pull/435
@@ -412,7 +458,7 @@ Codename: 'Mastrolindo'.
   (Frank Sachsenheim).
 - Change: 'type' can also be a list of types (Frank Sachsenheim).
 
-- Fix: usage of 'document' to 'self.document' in '_validate' (Frank
+- Fix: useages of 'document' to 'self.document' in '_validate' (Frank
   Sachsenheim).
 - Fix: when 'items' is applied to a list, field name is used as key for
   'validator.errors', and offending field indexes are used as keys for field
@@ -608,4 +654,4 @@ Released on October 16 2012.
 First public preview release.
 
 .. _`upgrade notes`: upgrading
-.. _`funding page`: http://docs.python-cerberus.org/en/stable/funding.html
+.. _`funding page`: https://docs.python-cerberus.org/en/stable/funding.html
